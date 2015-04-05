@@ -5,5 +5,8 @@ authors = ["Lauris Jullien <lauris@yelp.com>"]
 license="MIT"
 description = "Solving Project Euler problems with rust."
 
+[dependencies]
+num = "*"
+
 [dependencies.algorithm]
 path = "./common/algorithm"
