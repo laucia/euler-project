@@ -9,6 +9,9 @@ dependencies = [
 [[package]]
 name = "algorithm"
 version = "0.0.1"
+dependencies = [
+ "num 0.1.22 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "libc"

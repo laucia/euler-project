@@ -1,3 +1,3 @@
 # euler-project
 
-run with `cargo run --bin problem_XXXX`
+run with `cargo run --bin XXXX`
