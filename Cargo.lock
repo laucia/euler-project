@@ -1,0 +1,11 @@
+[root]
+name = "euler"
+version = "0.0.1"
+dependencies = [
+ "algorithm 0.0.1",
+]
+
+[[package]]
+name = "algorithm"
+version = "0.0.1"
+

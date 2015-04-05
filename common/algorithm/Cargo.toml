@@ -1,0 +1,4 @@
+[package]
+name = "algorithm"
+version = "0.0.1"
+authors = ["Lauris Jullien <lauris.jullien@gmail.com>"]

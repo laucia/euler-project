@@ -1,0 +1,9 @@
+[package]
+name = "euler"
+version = "0.0.1"
+authors = ["Lauris Jullien <lauris@yelp.com>"]
+license="MIT"
+description = "Solving Project Euler problems with rust."
+
+[dependencies.algorithm]
+path = "./common/algorithm"
