@@ -4,9 +4,6 @@
 // What is the largest prime factor of the number 600851475143 ?
 extern crate core;
 
-use std::num;
-use core::ops::Rem;
-
 fn is_prime(value: u64, cache: &mut Vec<u64>) -> bool{
     let top_limit = ((value-1) as f64).sqrt().ceil() as u64;
     for prime in cache {
