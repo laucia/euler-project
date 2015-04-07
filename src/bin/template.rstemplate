@@ -1,0 +1,12 @@
+// [Problem <?>]: (https://projecteuler.net/problem=<?>)
+// - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+fn main() {
+    println!("{:?}", find_max_palindrome(100, 1000));
+}
+
+#[test]
+fn example() {
+    assert_eq!(,);
+}
