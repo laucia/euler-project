@@ -27,9 +27,9 @@ fn merge_prime_divisors(prime_divisors: &Vec<HashMap<u64, u64> >) -> HashMap<u64
     merged_counts
 }
 
-fn main() {
+fn min_product_solver(max_range: u64) -> u64 {
     let mut prime_divisors = Vec::new();
-    for i in 2..20 {
+    for i in 2..max_range+1 {
         prime_divisors.push(prime_divisor_counts(i))
     }
     let merged_divisors = merge_prime_divisors(&prime_divisors);
@@ -37,5 +37,14 @@ fn main() {
     for (prime, count) in merged_divisors.iter(){
         result *= prime.pow(*count as u32);
     }
-    println!("{:?}", result);
+    result
+}
+
+fn main() {
+    println!("{:?}", min_product_solver(20));
+}
+
+#[test]
+fn example() {
+    assert_eq!(2520, min_product_solver(10));
 }

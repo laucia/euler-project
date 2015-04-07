@@ -18,3 +18,8 @@ fn biggest_prime_naive(value: u64) -> u64 {
 fn main() {
     println!("{:?}", biggest_prime_naive(600851475143));
 }
+
+#[test]
+fn it_works() {
+    assert_eq!(29, biggest_prime_naive(13195));
+}

@@ -20,3 +20,8 @@ fn sum_fibonacci(bound: u64) -> u64 {
 fn main() {
     println!("{:?}", sum_fibonacci(4000000));
 }
+
+#[test]
+fn example() {
+    assert_eq!(10, sum_fibonacci(10));
+}

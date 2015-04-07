@@ -10,16 +10,25 @@ fn is_palindrome(value: u64) -> bool {
     string_value == rev_string_value
 }
 
-fn main() {
+fn find_max_palindrome(min: u64, max: u64) -> u64 {
     let mut temp;
     let mut max_palindrome = 0;
-    for i in (100..999) {
-        for j in (100..999){
+    for i in (min..max) {
+        for j in (min..max){
             temp = i * j;
             if is_palindrome(temp) && temp > max_palindrome {
                 max_palindrome = temp;
             }
         }
     }
-    println!("{:?}", max_palindrome);
+    max_palindrome
+}
+
+fn main() {
+    println!("{:?}", find_max_palindrome(100, 1000));
+}
+
+#[test]
+fn example() {
+    assert_eq!(9009, find_max_palindrome(10, 100));
 }

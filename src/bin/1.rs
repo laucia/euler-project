@@ -14,3 +14,9 @@ fn compute(bound: u64) -> u64 {
 fn main() {
    println!("{:?}", compute(1000));
 }
+
+
+#[test]
+fn example() {
+    assert_eq!(23, compute(10));
+}
