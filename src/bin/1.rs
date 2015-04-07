@@ -4,11 +4,8 @@
 // Find the sum of all the multiples of 3 or 5 below 1000.
 
 fn compute(bound: u64) -> u64 {
-    let mut sum = 0;
-    for i in (1 .. bound).filter(|&n| n % 3 == 0 || n % 5 == 0){
-        sum += i;
-    }
-    sum
+    (1 .. bound).filter(|&n| n % 3 == 0 || n % 5 == 0)
+                .fold(0, |a, v| a+v)
 }
 
 fn main() {
