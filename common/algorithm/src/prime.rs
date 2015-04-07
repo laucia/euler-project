@@ -53,7 +53,7 @@ impl Iterator for Primer {
         while !self.is_prime(i) {
             i += 1;
         }
-        self.last_returned == i;
+        self.last_returned = i;
         Some(i)
     }
 }
