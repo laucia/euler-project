@@ -14,7 +14,7 @@ fn find_max_palindrome(min: u64, max: u64) -> u64 {
     let mut temp;
     let mut max_palindrome = 0;
     for i in (min..max) {
-        for j in (min..max){
+        for j in (min..i){
             temp = i * j;
             if is_palindrome(temp) && temp > max_palindrome {
                 max_palindrome = temp;
