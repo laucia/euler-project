@@ -10,11 +10,9 @@ use algorithm::fibonacci::fibonacci;
 
 
 fn sum_fibonacci(bound: u64) -> u64 {
-    let mut sum = 0;
-    for i in fibonacci().take_while(|&n| n < bound).filter(|&n| n % 2 == 0){
-        sum += i;
-    }
-    sum
+    fibonacci().take_while(|&n| n < bound)
+               .filter(|&n| n % 2 == 0)
+               .fold(0, |a, v| a + v)
 }
 
 fn main() {

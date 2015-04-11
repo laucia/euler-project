@@ -8,7 +8,6 @@ use algorithm::prime::prime_factorization;
 
 fn biggest_prime_naive(value: u64) -> u64 {
     let prime_divisors = prime_factorization(value);
-    println!("{:?}", prime_divisors);
     match prime_divisors.len() {
         0 => 0,
         n => prime_divisors[n-1],

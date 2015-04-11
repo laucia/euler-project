@@ -3,6 +3,7 @@
 // A palindromic number reads the same both ways. The largest palindrome made
 // from the product of two 2-digit numbers is 9009 = 91 × 99.
 // Find the largest palindrome made from the product of two 3-digit numbers.
+use std::iter;
 
 fn is_palindrome(value: u64) -> bool {
     let string_value = value.to_string();
@@ -11,17 +12,10 @@ fn is_palindrome(value: u64) -> bool {
 }
 
 fn find_max_palindrome(min: u64, max: u64) -> u64 {
-    let mut temp;
-    let mut max_palindrome = 0;
-    for i in (min..max) {
-        for j in (min..i){
-            temp = i * j;
-            if is_palindrome(temp) && temp > max_palindrome {
-                max_palindrome = temp;
-            }
-        }
-    }
-    max_palindrome
+    (min..max).flat_map(|x| (min .. x).zip(iter::repeat(x)))
+              .map(|(x, y)| x*y)
+              .filter(|&x| is_palindrome(x))
+              .max().unwrap()
 }
 
 fn main() {
