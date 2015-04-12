@@ -3,10 +3,10 @@
 
 
 fn main() {
-    println!("{:?}",);
+    println!("{:?}", 0);
 }
 
 #[test]
 fn example() {
-    assert_eq!(,);
+    assert_eq!(0, 0);
 }
