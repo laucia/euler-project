@@ -19,31 +19,8 @@
 extern crate algorithm;
 extern crate num;
 
+use algorithm::triangular::TriangularNums;
 use num::integer::Integer;
-use std::mem;
-
-// Triangular numbers sequence iterator.
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-pub struct TriangularNums {
-    diff: u64,
-    next: u64,
-}
-
-impl TriangularNums {
-    pub fn new() -> TriangularNums {
-        TriangularNums { diff: 2, next: 1 }
-    }
-}
-
-impl Iterator for TriangularNums {
-    type Item = u64;
-
-    fn next(&mut self) -> Option<u64> {
-        let new_next = self.next + self.diff;
-        self.diff += 1;
-        Some(mem::replace(&mut self.next, new_next))
-    }
-}
 
 // Functions
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
