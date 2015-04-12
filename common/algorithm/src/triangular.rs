@@ -41,11 +41,11 @@ pub fn is_triangular(n: u64) -> bool {
     x == (x as u64) as f64
 }
 
-pub fn reverse_triangular(n: u64) -> Option<u64> {
+pub fn reverse_triangular(n: u64) -> Result<u64, String> {
     let x = _is_triangular_helper(n);
     match x == (x as u64) as f64 {
-        true => Some(x as u64),
-        false => None
+        true => Ok(x as u64),
+        false => Err("Not a triangular number".to_string()),
     }
 }
 
@@ -68,5 +68,5 @@ fn is_triangular_test() {
 fn reverse_triangular_test() {
     assert_eq!(7, reverse_triangular(28).unwrap());
     assert_eq!(8, reverse_triangular(nth_triangular_number(8)).unwrap());
-    assert_eq!(None, reverse_triangular(27));
+    assert!(reverse_triangular(27).is_err());
 }
