@@ -1,67 +1,87 @@
 extern crate num;
 
 use self::num::integer::Integer;
+use std::cell::RefCell;
 use std::collections::HashMap;
+use std::rc::Rc;
 
-pub struct Primer {
+
+const BASE_PRIMES: &'static [u64] = &[
+      2,   3,   5,   7,  11,  13,  17,  19,  23,  29,  31,  37,  41,  43,  47,
+     53,  59,  61,  67,  71,  73,  79,  83,  89,  97, 101, 103, 107, 109, 113,
+];
+
+// Cache
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+pub struct PrimeCache {
     cache: Vec<u64>,
-    last_returned: u64,
 }
 
-impl Primer {
-    fn is_prime(&mut self, value: u64) -> bool {
-        for prime in self.cache.iter() {
-            if value.is_multiple_of(&prime) {
-                return value/prime == 1;
-            }
-        }
-        let start = match self.cache.len() {
-            0 => 2,
-            n => self.cache[n-1],
-        };
-
-        let top_limit = (value as f64).sqrt().ceil() as u64;
-        for i in start..top_limit {
-            if value.is_multiple_of(&i) {
-                return false;
-            }
-        }
-        self.cache.push(value);
-        return true;
+impl PrimeCache {
+    pub fn new() -> PrimeCache {
+        PrimeCache::with_capacity(50000)
     }
-}
 
-// Implement 'Iterator' for 'Primer'
-impl Iterator for Primer {
-    type Item = u64;
-    fn next(&mut self) -> Option<u64> {
-        let mut i = self.last_returned;
-        let last_cached = *self.cache.last().unwrap();
+    fn with_capacity(capacity: usize) -> PrimeCache {
+        let mut cache = Vec::with_capacity(capacity + BASE_PRIMES.len());
+        cache.extend(BASE_PRIMES.iter().cloned());
+        PrimeCache {
+            cache: cache
+        }
+    }
 
-        // Check cache
-        if i < last_cached {
-            for prime in self.cache.iter() {
-                if *prime > i {
-                    self.last_returned = *prime;
-                    return Some(*prime);
+    fn max_prime(&self) -> u64 {
+        *self.cache.last().unwrap()
+    }
+
+    fn is_prime(&self, n: u64) -> bool {
+        self.cache.iter()
+            .take_while(|& &prime| prime * prime <= n)
+            .all(|&prime| !n.is_multiple_of(&prime))
+    }
+
+    fn nth_prime(&mut self, nth: usize) -> u64 {
+        if self.cache.len() < nth {
+            for n in (self.max_prime() + 2 ..) {
+                if self.is_prime(n) {
+                    self.cache.push(n);
+                    println!("new prime {:?}", n);
+                }
+                if self.cache.len() > nth {
+                    break;
                 }
             }
         }
-
-        // Create a new prime number
-        i += 1;
-        while !self.is_prime(i) {
-            i += 1;
-        }
-        self.last_returned = i;
-        Some(i)
+        return self.cache[nth]
     }
 }
 
-pub fn primer() -> Primer {
-    Primer {
-        cache: vec![2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47],
-        last_returned: 0,
+// Iterator
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+pub struct PrimeIterator {
+    cache: Rc<RefCell<PrimeCache>>,
+    last_idx: usize,
+}
+
+impl Iterator for PrimeIterator {
+    type Item = u64;
+
+    fn next(&mut self) -> Option<u64> {
+        let prime = self.cache.borrow_mut().nth_prime(self.last_idx);
+        self.last_idx += 1;
+        Some(prime)
+    }
+}
+
+// Usefull functions
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+pub fn primer() -> PrimeIterator {
+    PrimeIterator {
+        cache: Rc::new(RefCell::new(PrimeCache::new())),
+        last_idx: 0,
     }
 }
 
