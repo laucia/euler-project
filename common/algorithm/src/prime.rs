@@ -46,14 +46,13 @@ impl PrimeCache {
             for n in (self.max_prime() + 2 ..) {
                 if self.is_prime(n) {
                     self.cache.push(n);
-                    println!("new prime {:?}", n);
                 }
                 if self.cache.len() > nth {
                     break;
                 }
             }
         }
-        return self.cache[nth]
+        return self.cache[nth-1]
     }
 }
 
@@ -62,15 +61,15 @@ impl PrimeCache {
 
 pub struct PrimeIterator {
     cache: Rc<RefCell<PrimeCache>>,
-    last_idx: usize,
+    next_nth: usize,
 }
 
 impl Iterator for PrimeIterator {
     type Item = u64;
 
     fn next(&mut self) -> Option<u64> {
-        let prime = self.cache.borrow_mut().nth_prime(self.last_idx);
-        self.last_idx += 1;
+        let prime = self.cache.borrow_mut().nth_prime(self.next_nth);
+        self.next_nth += 1;
         Some(prime)
     }
 }
@@ -81,7 +80,7 @@ impl Iterator for PrimeIterator {
 pub fn primer() -> PrimeIterator {
     PrimeIterator {
         cache: Rc::new(RefCell::new(PrimeCache::new())),
-        last_idx: 0,
+        next_nth: 1,
     }
 }
 
